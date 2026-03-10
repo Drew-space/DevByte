@@ -3,15 +3,29 @@
 import PostCard from "@/components/PostCard";
 import { buttonVariants } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 
 import Link from "next/link";
 
 export default function DashboardPage() {
-  const userPost = useQuery(api.blog.getUserPosts);
+  const { isLoaded, isSignedIn } = useUser();
+  const userPost = useQuery(api.blog.getUserPosts, isSignedIn ? {} : "skip");
 
-  if (!userPost || userPost.length === 0) {
-    return <p>You dont have any post yet </p>;
+  if (!isLoaded) {
+    return <p>Loading...</p>;
+  }
+
+  if (!isSignedIn) {
+    return <p>Please sign in</p>;
+  }
+
+  if (!userPost) {
+    return <p>Loading posts...</p>;
+  }
+
+  if (userPost.length === 0) {
+    return <p>You don&lsquo;t have any posts yet</p>;
   }
   return (
     <div className="container mx-auto ">

@@ -12,11 +12,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="py-5 flex items-center justify-between mt-2 px-6">
+    <nav className="py-5 flex items-center justify-between mt-2 px-6  ">
       {/* Logo and nav links */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6 ">
         <Link href="/">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-3xl font-semibold tracking-tighter capitalize">
             Byte <span className="text-blue-500">Journals</span>
           </h1>
         </Link>
