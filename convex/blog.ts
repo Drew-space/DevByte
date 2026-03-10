@@ -56,3 +56,32 @@ export const getBlogPosts = query({
     }));
   },
 });
+
+export const getUserPosts = query({
+  args: {},
+
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("User not authenticated");
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_clerkId", (q) => q.eq("clerkId", identity.subject))
+      .unique();
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const posts = await ctx.db
+      .query("blogPosts")
+      .withIndex("by_author", (q) => q.eq("authorId", user._id))
+      .order("desc")
+      .collect();
+
+    return posts;
+  },
+});

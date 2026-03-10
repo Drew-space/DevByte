@@ -1,5 +1,5 @@
-// import { handleSubmission } from "@/app/actions";
-// import { Submitbutton } from "@/components/general/Submitbutton";
+import { handleSubmission } from "@/app/action";
+import { SubmitButton } from "@/components/Submitbutton";
 
 import {
   Card,
@@ -14,8 +14,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function CreateBlogroute() {
   return (
-    <div>
-      <Card className=" max-w-lg mx-auto">
+    <div className="flex min-h-screen items-center justify-center">
+      <Card className=" max-w-lg w-full  ">
         <CardHeader>
           <CardTitle>Create Post</CardTitle>
           <CardDescription>
@@ -23,7 +23,7 @@ export default function CreateBlogroute() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="flex flex-col gap-4" action={""}>
+          <form className="flex flex-col gap-4" action={handleSubmission}>
             <div className="flex flex-col gap-2">
               <Label>Title</Label>
               <Input name="title" required type="text" placeholder="Title" />
@@ -37,8 +37,8 @@ export default function CreateBlogroute() {
               <Label>Image URL</Label>
               <Input name="url" required type="url" placeholder="Image url" />
             </div>
-            {/* 
-            <Submitbutton /> */}
+
+            <SubmitButton />
           </form>
         </CardContent>
       </Card>
