@@ -1,10 +1,12 @@
 "use client";
 
+import PostCardSkeleton from "@/components/loading";
 import PostCard from "@/components/PostCard";
 import { buttonVariants } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
+import { FileText } from "lucide-react";
 
 import Link from "next/link";
 
@@ -12,20 +14,39 @@ export default function DashboardPage() {
   const { isLoaded, isSignedIn } = useUser();
   const userPost = useQuery(api.blog.getUserPosts, isSignedIn ? {} : "skip");
 
-  if (!isLoaded) {
-    return <p>Loading...</p>;
-  }
+  // if (!isSignedIn) {
+  //   return <p>Please sign in</p>;
+  // }
 
-  if (!isSignedIn) {
-    return <p>Please sign in</p>;
-  }
+  if (!userPost || !isLoaded) {
+    return (
+      <div className="py-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-8">Latest Blog</h1>
 
-  if (!userPost) {
-    return <p>Loading posts...</p>;
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <PostCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (userPost.length === 0) {
-    return <p>You don&lsquo;t have any posts yet</p>;
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <div className="flex items-center justify-center size-16 rounded-full bg-muted mb-4">
+          <FileText className="size-8 text-muted-foreground" />
+        </div>
+
+        <h2 className="text-lg font-semibold text-gray-900">No posts yet</h2>
+
+        <p className="text-sm text-muted-foreground mt-1 max-w-sm">
+          You haven’t written any blog posts yet. Start sharing your ideas with
+          the world.
+        </p>
+      </div>
+    );
   }
   return (
     <div className="container mx-auto ">
@@ -37,7 +58,7 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {userPost?.map((post) => (
           <div key={post._id} className="">
             <PostCard

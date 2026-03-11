@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Skeleton } from "./ui/skeleton";
 
 type PostCardProps = {
   id: string;
@@ -23,50 +24,10 @@ export default function PostCard({
   createdAt,
 }: PostCardProps) {
   return (
-    // <div className="bg-white border rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
-    //   {/* Post Image */}
-    //   <Image
-    //     src={imageUrl}
-    //     alt={title}
-    //     width={600}
-    //     height={400}
-    //     className="w-full h-52 object-cover"
-    //   />
-
-    //   <div className="p-4 space-y-3">
-    //     {/* Title */}
-    //     <h2 className="text-lg font-semibold line-clamp-2">{title}</h2>
-
-    //     {/* Content Preview */}
-    //     <p className="text-sm text-gray-600 line-clamp-3">{content}</p>
-
-    //     {/* Author */}
-    //     <div className="flex items-center gap-2 pt-2">
-    //       <Image
-    //         src={authorImage}
-    //         alt={authorName}
-    //         width={32}
-    //         height={32}
-    //         className="rounded-full"
-    //       />
-
-    //       <div className="flex flex-col">
-    //         <span className="text-sm font-medium">{authorName}</span>
-    //         <span className="text-xs text-gray-500">
-    //           {new Intl.DateTimeFormat("en-US", {
-    //             year: "numeric",
-    //             month: "short",
-    //             day: "numeric",
-    //           }).format(createdAt)}
-    //         </span>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg">
       <Link href={`/blog/${id}`} className="block w-full h-full">
-        <div className="relative h-48 w-full overflow-hidden">
+        {/* Image */}
+        <div className="relative h-36 sm:h-48 w-full overflow-hidden">
           <Image
             src={imageUrl}
             alt="Image for blog"
@@ -75,14 +36,22 @@ export default function PostCard({
           />
         </div>
 
-        <div className="p-4">
-          <h3 className="mb-2 text-lg font-semibold text-gray-900">{title}</h3>
+        <div className="p-3 sm:p-4">
+          {/* Title */}
+          <h3 className="mb-1 sm:mb-2 text-sm sm:text-lg font-semibold text-gray-900 line-clamp-1">
+            {title}
+          </h3>
 
-          <p className="mb-4 text-sm text-gray-600 line-clamp-2">{content}</p>
+          {/* Content */}
+          <p className="mb-3 sm:mb-4 text-xs sm:text-sm text-gray-600 line-clamp-2">
+            {content}
+          </p>
 
+          {/* Author + Date */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="relative size-8 overflow-hidden rounded-full">
+            <div className="flex items-center space-x-1 sm:space-x-2">
+              {/* Clerk avatar */}
+              <div className="relative size-6 sm:size-8 overflow-hidden rounded-full">
                 <Image
                   src={authorImage}
                   alt={authorName}
@@ -90,10 +59,15 @@ export default function PostCard({
                   className="object-cover"
                 />
               </div>
-              <p className="text-sm font-medium text-gray-700">{authorName}</p>
+
+              {/* Author name */}
+              <p className="text-xs sm:text-sm font-medium text-gray-700 truncate max-w-17.5 sm:max-w-none">
+                {authorName}
+              </p>
             </div>
 
-            <time className="text-xs text-gray-500">
+            {/* Date */}
+            <time className="text-[10px] truncate max-w-17.5 sm:max-w-none sm:text-xs text-gray-500">
               {new Intl.DateTimeFormat("en-US", {
                 year: "numeric",
                 month: "short",
