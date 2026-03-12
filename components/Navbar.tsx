@@ -69,6 +69,16 @@ const Navbar = () => {
                       {links.name}
                     </a>
                   ))}
+                  <SignOutButton>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      <LogInIcon className="h-4 w-4" />
+                      Logout
+                    </Button>
+                  </SignOutButton>
                 </nav>
               </div>
             </SheetContent>
@@ -78,7 +88,7 @@ const Navbar = () => {
         {/* Only visible when signed out */}
         <Show when="signed-out">
           <SignInButton mode="modal">
-            <Button size="sm" className="hidden sm:flex items-center gap-2">
+            <Button size="sm" className="flex items-center gap-2">
               Login
             </Button>
           </SignInButton>

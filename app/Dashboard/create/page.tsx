@@ -105,7 +105,6 @@ export default function CreateBlogRoute() {
                 type="file"
                 name="image"
                 accept="image/*"
-                capture="environment"
                 onChange={handleFileChange}
               />
               {preview && (
