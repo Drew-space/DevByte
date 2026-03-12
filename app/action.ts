@@ -5,8 +5,8 @@ import { auth } from "@clerk/nextjs/server";
 import { fetchMutation } from "convex/nextjs";
 
 export async function handleSubmission(formData: FormData) {
-  const { getToken } = auth();
-  const token = await getToken({ template: "convex" });
+  const { getToken } = await auth();
+  const token = (await getToken({ template: "convex" })) ?? undefined; // ✅ converts null to undefined
 
   const title = formData.get("title") as string;
   const content = formData.get("content") as string;
