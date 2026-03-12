@@ -5,11 +5,14 @@ export const createBlog = mutation({
   args: {
     title: v.string(),
     content: v.string(),
-    imageUrl: v.string(),
+    // imageUrl: v.string(),
+    imageStorageId: v.id("_storage"),
   },
 
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
+    const imageUrl = await ctx.storage.getUrl(args.imageStorageId);
+    if (!imageUrl) throw new Error("Image not found");
 
     if (!identity) {
       throw new Error("User not authenticated");
@@ -28,10 +31,12 @@ export const createBlog = mutation({
     return await ctx.db.insert("blogPosts", {
       title: args.title,
       content: args.content,
-      imageUrl: args.imageUrl,
+      imageUrl: imageUrl,
+      imageStorageId: args.imageStorageId,
       authorId: user._id,
       authorName: user.name,
       authorImage: user.imageUrl,
+
       updatedAt: Date.now(),
     });
   },
@@ -42,18 +47,7 @@ export const getBlogPosts = query({
   handler: async (ctx) => {
     const posts = await ctx.db.query("blogPosts").collect();
 
-    // Map to include _creationTime as createdAt
-    return posts.map((post) => ({
-      id: post._id,
-      title: post.title,
-      content: post.content,
-      imageUrl: post.imageUrl,
-      authorId: post.authorId,
-      authorName: post.authorName,
-      authorImage: post.authorImage,
-      createdAt: post._creationTime, //time stamp from convex already built in
-      updatedAt: post.updatedAt,
-    }));
+    return posts;
   },
 });
 
@@ -84,4 +78,28 @@ export const getUserPosts = query({
 
     return posts;
   },
+});
+
+export const getPostById = query({
+  args: { id: v.id("blogPosts") },
+  handler: async (ctx, { id }) => {
+    const post = await ctx.db.get(id);
+    if (!post) return null;
+
+    return {
+      id: post._id,
+      title: post.title,
+      content: post.content,
+      imageUrl: post.imageUrl,
+      authorId: post.authorId,
+      authorName: post.authorName,
+      authorImage: post.authorImage,
+      createdAt: post._creationTime,
+      updatedAt: post.updatedAt,
+    };
+  },
+});
+
+export const generateImageUploadUrl = mutation(async (ctx) => {
+  return await ctx.storage.generateUploadUrl();
 });
