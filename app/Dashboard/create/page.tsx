@@ -90,7 +90,12 @@ export default function CreateBlogRoute() {
 
             <div className="flex flex-col gap-2">
               <Label>Content</Label>
-              <Textarea required name="content" placeholder="Content" />
+              <Textarea
+                required
+                name="content"
+                placeholder="Content"
+                className="min-h-[120px] max-h-[300px] overflow-y-auto resize-none"
+              />
             </div>
 
             <div className="flex flex-col gap-2">

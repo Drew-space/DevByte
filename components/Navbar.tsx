@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { LogInIcon } from "lucide-react";
+import { LogInIcon, Menu } from "lucide-react";
 import { SignInButton, SignOutButton, UserButton, Show } from "@clerk/nextjs";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 
 const Navbar = () => {
   const navLink = [
@@ -49,6 +50,51 @@ const Navbar = () => {
               Logout
             </Button>
           </SignOutButton>
+          {/* <Sheet>
+            <SheetTrigger asChild className=" md:hidden ">
+              <Menu />
+            </SheetTrigger>
+            <SheetContent className="w-84">
+              <div className=" flex flex-col  gap-12  h-full pt-16">
+                <div>
+                  <nav className="flex flex-col items-start gap-5  text-zinc-950 pl-4 font-bold ">
+                    {navLink.map((links) => (
+                      <a
+                        href={links.hrefs}
+                        key={links.name}
+                        className="link-pirmary hover:text-accent-2 "
+                      >
+                        {links.name}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet> */}
+          <Sheet>
+            <SheetTrigger asChild className="md:hidden">
+              <Menu />
+            </SheetTrigger>
+            <SheetContent className="w-84">
+              {/* Add this for accessibility */}
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+
+              <div className="flex flex-col gap-12 h-full pt-16">
+                <nav className="flex flex-col items-start gap-5 text-zinc-950 pl-4 font-bold">
+                  {navLink.map((links) => (
+                    <a
+                      href={links.hrefs}
+                      key={links.name}
+                      className="link-pirmary hover:text-accent-2"
+                    >
+                      {links.name}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
         </Show>
 
         {/* Only visible when signed out */}

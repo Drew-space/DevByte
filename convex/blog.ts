@@ -45,7 +45,7 @@ export const createBlog = mutation({
 export const getBlogPosts = query({
   args: {},
   handler: async (ctx) => {
-    const posts = await ctx.db.query("blogPosts").collect();
+    const posts = await ctx.db.query("blogPosts").order("desc").collect();
 
     return posts;
   },
