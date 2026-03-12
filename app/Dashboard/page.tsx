@@ -39,7 +39,7 @@ export default function DashboardPage() {
           <FileText className="size-8 text-muted-foreground" />
         </div>
 
-        <h2 className="text-lg font-semibold text-gray-900">No posts yet</h2>
+        <h2 className="text-lg font-semibold text-gray-900">No blog yet</h2>
 
         <p className="text-sm text-muted-foreground mt-1 max-w-sm">
           You haven’t written any blog posts yet. Start sharing your ideas with
@@ -54,7 +54,7 @@ export default function DashboardPage() {
         <h2 className="text-xl font-medium">Your Blog Articles</h2>
 
         <Link className={buttonVariants()} href="/Dashboard/create">
-          Create Post
+          Create Blog
         </Link>
       </div>
 

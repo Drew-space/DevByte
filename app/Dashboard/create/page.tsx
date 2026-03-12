@@ -1,51 +1,3 @@
-// import { handleSubmission } from "@/app/action";
-// import { SubmitButton } from "@/components/Submitbutton";
-
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import { Textarea } from "@/components/ui/textarea";
-
-// export default function CreateBlogroute() {
-//   return (
-//     <div className="flex min-h-screen items-center justify-center">
-//       <Card className=" max-w-lg w-full  ">
-//         <CardHeader>
-//           <CardTitle>Create Post</CardTitle>
-//           <CardDescription>
-//             Create a new post to share with the world
-//           </CardDescription>
-//         </CardHeader>
-//         <CardContent>
-//           <form className="flex flex-col gap-4" action={handleSubmission}>
-//             <div className="flex flex-col gap-2">
-//               <Label>Title</Label>
-//               <Input name="title" required type="text" placeholder="Title" />
-//             </div>
-//             <div className="flex flex-col gap-2">
-//               <Label>Content</Label>
-//               <Textarea name="content" required placeholder="Content" />
-//             </div>
-
-//             <div className="flex flex-col gap-2">
-//               <Label>Image URL</Label>
-//               <Input name="url" required type="url" placeholder="Image url" />
-//             </div>
-
-//             <SubmitButton />
-//           </form>
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// }"use client";
-
 "use client";
 
 import { useState } from "react";
@@ -61,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { SubmitButton } from "@/components/Submitbutton";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function CreateBlogRoute() {
   const [preview, setPreview] = useState<string | null>(null);
@@ -73,53 +27,58 @@ export default function CreateBlogRoute() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <Card className="max-w-lg w-full">
-        <CardHeader>
-          <CardTitle>Create Post</CardTitle>
-          <CardDescription>
-            Create a new post to share with the world
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label>Title</Label>
-              <Input required type="text" name="title" placeholder="Title" />
-            </div>
+    <div className="container mx-auto">
+      <Link className={buttonVariants()} href="/Dashboard">
+        Go Back
+      </Link>
+      <div className="flex min-h-screen items-center justify-center">
+        <Card className="max-w-lg w-full">
+          <CardHeader>
+            <CardTitle>Create Post</CardTitle>
+            <CardDescription>
+              Create a new blog to share with the world
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <Label>Title</Label>
+                <Input required type="text" name="title" placeholder="Title" />
+              </div>
 
-            <div className="flex flex-col gap-2">
-              <Label>Content</Label>
-              <Textarea
-                required
-                name="content"
-                placeholder="Content"
-                className="min-h-[120px] max-h-[300px] overflow-y-auto resize-none"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Label>Image</Label>
-              <Input
-                required
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-              {preview && (
-                <img
-                  src={preview}
-                  alt="Preview"
-                  className="w-full h-48 object-cover rounded-lg mt-2"
+              <div className="flex flex-col gap-2">
+                <Label>Content</Label>
+                <Textarea
+                  required
+                  name="content"
+                  placeholder="Content"
+                  className="min-h-30 max-h-75 overflow-y-auto resize-none"
                 />
-              )}
-            </div>
+              </div>
 
-            <SubmitButton />
-          </form>
-        </CardContent>
-      </Card>
+              <div className="flex flex-col gap-2">
+                <Label>Image</Label>
+                <Input
+                  required
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {preview && (
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    className="w-full h-48 object-cover rounded-lg mt-2"
+                  />
+                )}
+              </div>
+
+              <SubmitButton />
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
