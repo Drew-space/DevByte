@@ -29,3 +29,36 @@ export const createUser = mutation({
     return userId;
   },
 });
+
+export const deleteUserAndPosts = mutation({
+  args: { clerkId: v.string() },
+  handler: async (ctx, args) => {
+    // Find the user
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_clerkId", (q) => q.eq("clerkId", args.clerkId))
+      .unique();
+
+    if (!user) return;
+
+    // Delete all their blog posts + images from storage
+    const posts = await ctx.db
+      .query("blogPosts")
+      .withIndex("by_author", (q) => q.eq("authorId", user._id))
+      .collect();
+
+    await Promise.all(
+      posts.map(async (post) => {
+        // Delete image from Convex storage if it exists
+        if (post.imageStorageId) {
+          await ctx.storage.delete(post.imageStorageId);
+        }
+        // Delete the post
+        await ctx.db.delete(post._id);
+      }),
+    );
+
+    // Delete the user
+    await ctx.db.delete(user._id);
+  },
+});

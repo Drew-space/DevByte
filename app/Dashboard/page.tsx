@@ -41,10 +41,13 @@ export default function DashboardPage() {
 
         <h2 className="text-lg font-semibold text-gray-900">No blog yet</h2>
 
-        <p className="text-sm text-muted-foreground mt-1 max-w-sm">
+        <p className="text-sm text-muted-foreground mt-1 mb-4 max-w-sm">
           You haven’t written any blog posts yet. Start sharing your ideas with
           the world.
         </p>
+        <Link className={buttonVariants()} href="/Dashboard/create">
+          Create Blog
+        </Link>
       </div>
     );
   }

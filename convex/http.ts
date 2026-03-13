@@ -59,6 +59,20 @@ const clerkwebhook = httpAction(async (ctx, request) => {
     }
   }
 
+  if (eventType === "user.deleted") {
+    const { id } = evt.data;
+    try {
+      await ctx.runMutation(api.users.deleteUserAndPosts, {
+        clerkId: id as string,
+      });
+    } catch (error) {
+      console.log("error deleting user in convex", error);
+      return new Response("error occured", { status: 500 });
+    }
+  }
+
+  return new Response("Webhook processed successfully", { status: 200 }); // 👈 also update this message
+
   return new Response("User created successfully", { status: 200 });
 });
 

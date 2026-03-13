@@ -13,7 +13,7 @@ export default function Home() {
   if (!posts) {
     return (
       <div className="py-6">
-        <div className="flex justify-between ">
+        <div className="flex justify-between">
           <h1 className="text-3xl font-bold tracking-tight ">Latest Blog</h1>
           <Link
             className={buttonVariants() + " hidden md:inline-flex"}
